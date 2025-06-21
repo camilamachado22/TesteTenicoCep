@@ -4,10 +4,7 @@ namespace TesteTecnicoCep.Models
 {
     public class Cliente
     {
-        public Cliente()
-        {
-            Contatos = new HashSet<Contato>(); 
-        }
+        
         [Required]
         public int id { get; set; }
         [Required]
@@ -16,10 +13,7 @@ namespace TesteTecnicoCep.Models
         
         public DateTime data_cadastro { get; set; }
 
-        public virtual Endereco Endereco { get; set; }
-
-        public virtual ICollection<Contato> Contatos { get; set; }
-
+        
     }
 }
 
