@@ -6,15 +6,16 @@ namespace TesteTecnicoCep.DTOs
 {
     public class ClienteDTO
     {
+
         public ClienteDTO()
         {
             Contatos = new HashSet<ContatoDTO>();
         }
-        [Required]
+        
         public int id { get; set; }
-        [Required]
+        
         public  string? nome { get; set; }
-        [Required]
+        
         public DateTime data_cadastro { get; set; }
 
         public virtual EnderecoDTO Endereco { get; set; }

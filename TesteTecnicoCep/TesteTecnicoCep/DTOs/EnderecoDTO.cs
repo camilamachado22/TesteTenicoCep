@@ -2,7 +2,7 @@
 {
     public class EnderecoDTO
     {
-        public string cep { get; set; }
+        public string? cep { get; set; }
         public string? logradouro { get; set; }
         public string? cidade { get; set; }
         public string? numero { get; set; }
