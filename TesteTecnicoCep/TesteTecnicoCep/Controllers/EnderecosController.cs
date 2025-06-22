@@ -25,13 +25,13 @@ namespace TesteTecnicoCep.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Endereco>>> GetEnderecos()
         {
-            return await _context.Enderecos.ToListAsync();
+            return await _context.endereco.ToListAsync();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Endereco>> GetEndereco(int id)
         {
-            var endereco = await _context.Enderecos.FindAsync(id);
+            var endereco = await _context.endereco.FindAsync(id);
 
             if (endereco == null)
             {
@@ -75,7 +75,7 @@ namespace TesteTecnicoCep.Controllers
         [HttpPost]
         public async Task<ActionResult<Endereco>> PostEndereco(Endereco endereco)
         {
-            _context.Enderecos.Add(endereco);
+            _context.endereco.Add(endereco);
             try
             {
                 await _context.SaveChangesAsync();
@@ -99,13 +99,13 @@ namespace TesteTecnicoCep.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEndereco(int id)
         {
-            var endereco = await _context.Enderecos.FindAsync(id);
+            var endereco = await _context.endereco.FindAsync(id);
             if (endereco == null)
             {
                 return NotFound();
             }
 
-            _context.Enderecos.Remove(endereco);
+            _context.endereco.Remove(endereco);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -113,7 +113,7 @@ namespace TesteTecnicoCep.Controllers
 
         private bool EnderecoExists(int id)
         {
-            return _context.Enderecos.Any(e => e.id_cliente == id);
+            return _context.endereco.Any(e => e.id_cliente == id);
         }
     }
 }
