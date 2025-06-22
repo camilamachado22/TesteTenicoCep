@@ -7,19 +7,12 @@ namespace TesteTecnicoCep.Models
     public class Cliente
     {
 
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-<<<<<<< Updated upstream
         public Cliente()
         {
             Contatos = new HashSet<Contato>(); 
         }
-        [Required]
-        public int id { get; set; }
-        [Required]
-        public string nome { get; set; }
-        [Required]
-=======
+
+
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -32,13 +25,7 @@ namespace TesteTecnicoCep.Models
         public virtual Endereco? Endereco { get; set; }
         public virtual ICollection<Contato>? Contato { get; set; }
 
-<<<<<<< Updated upstream
-        public virtual Endereco Endereco { get; set; }
 
-        public virtual ICollection<Contato> Contatos { get; set; }
-
-=======
->>>>>>> Stashed changes
     }
 }
 
