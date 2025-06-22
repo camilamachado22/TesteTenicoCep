@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TesteTecnicoCep.Data;
+using TesteTecnicoCep.DTOs;
 using TesteTecnicoCep.Models;
+using TesteTecnicoCep.Services;
 
 namespace TesteTecnicoCep.Controllers
 {
@@ -25,14 +27,14 @@ namespace TesteTecnicoCep.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
         {
-            return await _context.Clientes.ToListAsync();
+            return await _context.cliente.ToListAsync();
         }
 
         
         [HttpGet("{id}")]
         public async Task<ActionResult<Cliente>> GetCliente(int id)
         {
-            var cliente = await _context.Clientes.FindAsync(id);
+            var cliente = await _context.cliente.FindAsync(id);
 
             if (cliente == null)
             {
@@ -74,9 +76,40 @@ namespace TesteTecnicoCep.Controllers
 
         
         [HttpPost]
-        public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
+        public async Task<ActionResult<Cliente>> PostCliente(ClienteCadastroDTO clientecadastro, [FromServices] CepService cepService)
         {
-            _context.Clientes.Add(cliente);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var (logradouro, cidade,complemento) = await cepService.BuscarEnderecoPorCep(clientecadastro.Cep);
+            
+            var cliente = new Cliente
+            {
+                nome = clientecadastro.Nome,
+                data_cadastro = DateTime.Now,
+                Contato = new List<Contato>
+        {
+            new Contato
+            {
+                tipo = clientecadastro.TipoContato,
+                texto = clientecadastro.TextoContato
+            }
+        },
+                Endereco = new Endereco
+                {
+                    cep = clientecadastro.Cep,
+                    numero = clientecadastro.Numero,
+                    logradouro = logradouro,
+                    cidade = cidade,
+                    complemento = complemento
+
+                    
+                  
+                }
+            };
+
+            _context.cliente.Add(cliente);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCliente", new { id = cliente.id }, cliente);
@@ -85,13 +118,13 @@ namespace TesteTecnicoCep.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCliente(int id)
         {
-            var cliente = await _context.Clientes.FindAsync(id);
+            var cliente = await _context.cliente.FindAsync(id);
             if (cliente == null)
             {
                 return NotFound();
             }
 
-            _context.Clientes.Remove(cliente);
+            _context.cliente.Remove(cliente);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -99,7 +132,7 @@ namespace TesteTecnicoCep.Controllers
 
         private bool ClienteExists(int id)
         {
-            return _context.Clientes.Any(e => e.id == id);
+            return _context.cliente.Any(e => e.id == id);
         }
     }
 }

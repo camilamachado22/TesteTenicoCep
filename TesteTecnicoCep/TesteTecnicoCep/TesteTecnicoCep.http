@@ -1,6 +1,52 @@
-@TesteTecnicoCep_HostAddress = http://localhost:5221
+@TesteTecnicoCep_HostAddress = https://localhost:7116
 
 GET {{TesteTecnicoCep_HostAddress}}/weatherforecast/
 Accept: application/json
+
+###
+
+@id=0
+PUT {{TesteTecnicoCep_HostAddress}}/api/clientes/{{id}}
+Content-Type: application/json
+
+{
+  nome : "Teste"
+
+  data_cadastro : ""
+}
+
+###
+
+POST {{TesteTecnicoCep_HostAddress}}/api/clientes
+Content-Type: application/json
+
+{
+  "nome": "Camila Machado5",
+    "tipoContato": "e-mail",
+    "textoContato": "camila@email.com",
+    "cep": "13481332",
+    "numero": "107"
+    
+  
+}
+
+###
+
+
+
+POST {{TesteTecnicoCep_HostAddress}}/api/clientes
+Content-Type: application/json
+
+{
+  //Cliente
+}
+
+###
+@id = 3
+DELETE {{TesteTecnicoCep_HostAddress}}/api/clientes/{{id}}
+
+###
+
+GET {{TesteTecnicoCep_HostAddress}}/api/clientes
 
 ###

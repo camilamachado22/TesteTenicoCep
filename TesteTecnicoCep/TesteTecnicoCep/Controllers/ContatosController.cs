@@ -25,14 +25,14 @@ namespace TesteTecnicoCep.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Contato>>> GetContatos()
         {
-            return await _context.Contatos.ToListAsync();
+            return await _context.contato.ToListAsync();
         }
 
         // GET: api/Contatos/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Contato>> GetContato(int id)
         {
-            var contato = await _context.Contatos.FindAsync(id);
+            var contato = await _context.contato.FindAsync(id);
 
             if (contato == null)
             {
@@ -78,7 +78,7 @@ namespace TesteTecnicoCep.Controllers
         [HttpPost]
         public async Task<ActionResult<Contato>> PostContato(Contato contato)
         {
-            _context.Contatos.Add(contato);
+            _context.contato.Add(contato);
             try
             {
                 await _context.SaveChangesAsync();
@@ -102,13 +102,13 @@ namespace TesteTecnicoCep.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteContato(int id)
         {
-            var contato = await _context.Contatos.FindAsync(id);
+            var contato = await _context.contato.FindAsync(id);
             if (contato == null)
             {
                 return NotFound();
             }
 
-            _context.Contatos.Remove(contato);
+            _context.contato.Remove(contato);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -116,7 +116,7 @@ namespace TesteTecnicoCep.Controllers
 
         private bool ContatoExists(int id)
         {
-            return _context.Contatos.Any(e => e.id_cliente == id);
+            return _context.contato.Any(e => e.id_cliente == id);
         }
     }
 }

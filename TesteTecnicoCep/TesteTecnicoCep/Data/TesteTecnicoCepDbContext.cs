@@ -9,9 +9,9 @@ namespace TesteTecnicoCep.Data
         {
         }
 
-        public DbSet<Cliente> Clientes { get; set; }
-        public DbSet<Endereco> Enderecos { get; set; }
-        public DbSet<Contato> Contatos { get; set; }
+        public DbSet<Cliente> cliente { get; set; }
+        public DbSet<Endereco> endereco { get; set; }
+        public DbSet<Contato> contato { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -33,6 +33,17 @@ namespace TesteTecnicoCep.Data
                 .HasOne<Cliente>()
                 .WithOne()
                 .HasForeignKey<Endereco>(e => e.id_cliente);
+
+            modelBuilder.Entity<Cliente>()
+                .HasOne(c => c.Endereco)
+                .WithOne()
+                .HasForeignKey<Endereco>(e => e.id_cliente);
+
+            // Configuração do relacionamento Cliente -> Contatos (1:N)
+            modelBuilder.Entity<Cliente>()
+                .HasMany(c => c.Contato)
+                .WithOne()
+                .HasForeignKey(ct => ct.id_cliente);
         }
     }
 }
