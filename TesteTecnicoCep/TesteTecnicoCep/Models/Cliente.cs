@@ -9,36 +9,16 @@ namespace TesteTecnicoCep.Models
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-<<<<<<< Updated upstream
-        public Cliente()
-        {
-            Contatos = new HashSet<Contato>(); 
-        }
-        [Required]
         public int id { get; set; }
-        [Required]
-        public string nome { get; set; }
-        [Required]
-=======
 
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id { get; set; }
-        
-        public string ? nome { get; set; }
+        public string? nome { get; set; }
         [Required]
-        
+
         public DateTime data_cadastro { get; set; }
         public virtual Endereco? Endereco { get; set; }
-        public virtual ICollection<Contato>? Contato { get; set; }
 
-<<<<<<< Updated upstream
-        public virtual Endereco Endereco { get; set; }
+        public virtual Contato? Contatos { get; set; }
 
-        public virtual ICollection<Contato> Contatos { get; set; }
 
-=======
->>>>>>> Stashed changes
     }
 }
-
