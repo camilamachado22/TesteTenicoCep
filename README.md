@@ -32,6 +32,9 @@ Aplicação para **cadastro, edição, exclusão e listagem de clientes**, com b
    ```bash
    git clone https://github.com/camilamachado22/TesteTenicoCep
    cd TesteTenicoCep
+2. **Banco de Dados**:
+Se necessário utilizar ScriptCriacaoBanco.txt se encontra em /Data    
+   
 ---
 
 ### 🔍 Pacotes Principais
