@@ -11,9 +11,9 @@ namespace TesteTecnicoCep.Mapping
 
             CreateMap<DTOs.ClienteCadastroDTO, Models.Cliente>()
             .ForMember(dest => dest.nome, opt => opt.MapFrom(src => src.Nome))
-            .ForMember(dest => dest.Contato, opt => opt.MapFrom(src => new List<Contato>
+            .ForMember(dest => dest.Contatos, opt => opt.MapFrom(src => new Contato
             {
-                new Contato { tipo = src.TipoContato, texto = src.TextoContato }
+                 tipo = src.TipoContato, texto = src.TextoContato 
             }))
             .ForMember(dest => dest.Endereco, opt => opt.MapFrom(src => new Endereco
             {

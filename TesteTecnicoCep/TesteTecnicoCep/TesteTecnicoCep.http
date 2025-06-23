@@ -50,3 +50,16 @@ DELETE {{TesteTecnicoCep_HostAddress}}/api/clientes/{{id}}
 GET {{TesteTecnicoCep_HostAddress}}/api/clientes
 
 ###
+
+PUT {{TesteTecnicoCep_HostAddress}}/api/clientes/{{id}}
+Content-Type: application/json
+
+{
+  //Cliente
+}
+
+###
+
+GET {{TesteTecnicoCep_HostAddress}}/api/clientes/{{id}}
+
+###

@@ -19,7 +19,7 @@ namespace TesteTecnicoCep.Services
             var json = await response.Content.ReadAsStringAsync();
             var dados = JsonSerializer.Deserialize<CepResponse>(json);
 
-            return (dados.logradouro, dados.localidade, dados.complemento);
+            return (dados?.logradouro, dados?.localidade, dados?.complemento);
         }
     }
 

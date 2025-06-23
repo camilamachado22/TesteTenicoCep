@@ -34,7 +34,10 @@ namespace TesteTecnicoCep.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Cliente>> GetCliente(int id)
         {
-            var cliente = await _context.cliente.FindAsync(id);
+            var cliente = await _context.cliente
+         .Include(c => c.Endereco)  // Carrega o endereço
+         .Include(c => c.Contatos)   // Carrega os contatos
+         .FirstOrDefaultAsync(c => c.id == id);
 
             if (cliente == null)
             {
@@ -44,16 +47,42 @@ namespace TesteTecnicoCep.Controllers
             return cliente;
         }
 
-        
+
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCliente(int id, Cliente cliente)
+        public async Task<IActionResult> PutCliente(int id, ClienteCadastroDTO clienteUpdate, [FromServices] CepService cepService)
         {
-            if (id != cliente.id)
+            if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
 
-            _context.Entry(cliente).State = EntityState.Modified;
+            // Busca o cliente existente com relacionamentos
+            var clienteExistente = await _context.cliente
+                .Include(c => c.Contatos)
+                .Include(c => c.Endereco)
+                .FirstOrDefaultAsync(c => c.id == id);
+
+            clienteExistente.nome = clienteUpdate.Nome;
+
+            // Atualiza contato (assumindo 1 contato por cliente)
+            var contatoExistente = clienteExistente?.Contatos?.ToString();
+            if (!string.IsNullOrWhiteSpace(contatoExistente))
+            {
+                var contato = clienteExistente?.Contatos;
+                contato.tipo = clienteUpdate.TipoContato;
+                contato.texto = clienteUpdate.TextoContato;
+            }
+
+            // Atualiza endereço
+            if (clienteUpdate.Cep != clienteExistente.Endereco?.cep)
+            {
+                var (logradouro, cidade, complemento) = await cepService.BuscarEnderecoPorCep(clienteUpdate.Cep);
+                clienteExistente.Endereco.cep = clienteUpdate.Cep;
+                clienteExistente.Endereco.logradouro = logradouro;
+                clienteExistente.Endereco.cidade = cidade;
+                clienteExistente.Endereco.complemento = complemento;
+            }
+            clienteExistente.Endereco.numero = clienteUpdate.Numero;
 
             try
             {
@@ -74,7 +103,7 @@ namespace TesteTecnicoCep.Controllers
             return NoContent();
         }
 
-        
+
         [HttpPost]
         public async Task<ActionResult<Cliente>> PostCliente(ClienteCadastroDTO clientecadastro, [FromServices] CepService cepService)
         {
@@ -88,13 +117,12 @@ namespace TesteTecnicoCep.Controllers
             {
                 nome = clientecadastro.Nome,
                 data_cadastro = DateTime.Now,
-                Contato = new List<Contato>
+                Contatos = new Contato
         {
-            new Contato
-            {
+            
                 tipo = clientecadastro.TipoContato,
                 texto = clientecadastro.TextoContato
-            }
+           
         },
                 Endereco = new Endereco
                 {

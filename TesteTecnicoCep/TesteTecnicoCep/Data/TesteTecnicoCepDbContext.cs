@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TesteTecnicoCep.Models;
+using TesteTecnicoCep.DTOs;
 
 namespace TesteTecnicoCep.Data
 {
@@ -41,9 +42,11 @@ namespace TesteTecnicoCep.Data
 
             // Configuração do relacionamento Cliente -> Contatos (1:N)
             modelBuilder.Entity<Cliente>()
-                .HasMany(c => c.Contato)
+                .HasOne(c => c.Contatos)
                 .WithOne()
-                .HasForeignKey(ct => ct.id_cliente);
+                .HasForeignKey<Contato>(ct => ct.id_cliente);
         }
+        public DbSet<TesteTecnicoCep.DTOs.ClienteDTO> ClienteDTO { get; set; } = default!;
+        
     }
 }
