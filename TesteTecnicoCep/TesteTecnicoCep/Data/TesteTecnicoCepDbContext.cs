@@ -28,25 +28,29 @@ namespace TesteTecnicoCep.Data
             modelBuilder.Entity<Contato>()
                 .HasOne<Cliente>()
                 .WithMany()
-                .HasForeignKey(c => c.id_cliente);
+                .HasForeignKey(c => c.id_cliente)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Endereco>()
                 .HasOne<Cliente>()
                 .WithOne()
-                .HasForeignKey<Endereco>(e => e.id_cliente);
+                .HasForeignKey<Endereco>(e => e.id_cliente)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Cliente>()
                 .HasOne(c => c.Endereco)
                 .WithOne()
-                .HasForeignKey<Endereco>(e => e.id_cliente);
+                .HasForeignKey<Endereco>(e => e.id_cliente)
+                .OnDelete(DeleteBehavior.Cascade);
 
-            // Configuração do relacionamento Cliente -> Contatos (1:N)
+
             modelBuilder.Entity<Cliente>()
                 .HasOne(c => c.Contatos)
                 .WithOne()
-                .HasForeignKey<Contato>(ct => ct.id_cliente);
+                .HasForeignKey<Contato>(ct => ct.id_cliente)
+                .OnDelete(DeleteBehavior.Cascade);
         }
-        public DbSet<TesteTecnicoCep.DTOs.ClienteDTO> ClienteDTO { get; set; } = default!;
+        
         
     }
 }
