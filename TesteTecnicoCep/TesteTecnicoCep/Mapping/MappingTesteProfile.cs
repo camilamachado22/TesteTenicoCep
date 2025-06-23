@@ -33,7 +33,8 @@ namespace TesteTecnicoCep.Mapping
     .ForMember(dest => dest.Numero, opt => opt.MapFrom(src => src.Endereco.numero))
     .ForMember(dest => dest.Logradouro, opt => opt.MapFrom(src => src.Endereco!.logradouro))
     .ForMember(dest => dest.Cidade, opt => opt.MapFrom(src => src.Endereco!.cidade))
-    .ForMember(dest => dest.Complemento, opt => opt.MapFrom(src => src.Endereco!.complemento));
+    .ForMember(dest => dest.Complemento, opt => opt.MapFrom(src => src.Endereco!.complemento))
+    .ForMember(dest => dest.DataCadastro, opt => opt.MapFrom(src => src.data_cadastro));
 
             CreateMap<DTOs.ContatoDTO, Models.Contato>()
                 .ReverseMap();

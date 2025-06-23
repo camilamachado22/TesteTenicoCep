@@ -1,9 +1,5 @@
 @TesteTecnicoCep_HostAddress = https://localhost:7116
 
-GET {{TesteTecnicoCep_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
 
 @id=0
 PUT {{TesteTecnicoCep_HostAddress}}/api/clientes/{{id}}
@@ -68,10 +64,10 @@ POST {{TesteTecnicoCep_HostAddress}}/api/clientes
 Content-Type: application/json
 
 {
- "nome": "Camila Machado7",
+ "nome": "Camila Machado8",
     "tipoContato": "e-mail",
     "textoContato": "camila@email.com",
-    "cep": "13481332",
+    "cep": "13481331",
     "numero": "107"
 }
 
