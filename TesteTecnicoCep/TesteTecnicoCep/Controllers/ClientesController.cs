@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TesteTecnicoCep.Data;
@@ -17,22 +13,28 @@ namespace TesteTecnicoCep.Controllers
     public class ClientesController : ControllerBase
     {
         private readonly TesteTecnicoCepDbContext _context;
+        private readonly IMapper _mapper;
 
-        public ClientesController(TesteTecnicoCepDbContext context)
+        public ClientesController(TesteTecnicoCepDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
+        public async Task<ActionResult<IEnumerable<ClienteCadastroDTO>>> GetClientes()
         {
-            return await _context.cliente.ToListAsync();
+            var clientes = await _context.cliente
+                .Include(c => c.Endereco)
+                .Include(c => c.Contatos)
+                .ToListAsync();
+
+            return _mapper.Map<List<ClienteCadastroDTO>>(clientes);
         }
 
-        
         [HttpGet("{id}")]
-        public async Task<ActionResult<Cliente>> GetCliente(int id)
+        public async Task<ActionResult<ClienteCadastroDTO>> GetCliente(int id)
         {
             var cliente = await _context.cliente
          .Include(c => c.Endereco)  // Carrega o endereço
@@ -44,7 +46,7 @@ namespace TesteTecnicoCep.Controllers
                 return NotFound();
             }
 
-            return cliente;
+            return _mapper.Map<ClienteCadastroDTO>(cliente);
         }
 
 
@@ -68,7 +70,7 @@ namespace TesteTecnicoCep.Controllers
             var contatoExistente = clienteExistente?.Contatos?.ToString();
             if (!string.IsNullOrWhiteSpace(contatoExistente))
             {
-                var contato = clienteExistente?.Contatos;
+                var contato = clienteExistente.Contatos;
                 contato.tipo = clienteUpdate.TipoContato;
                 contato.texto = clienteUpdate.TextoContato;
             }
@@ -140,7 +142,20 @@ namespace TesteTecnicoCep.Controllers
             _context.cliente.Add(cliente);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCliente", new { id = cliente.id }, cliente);
+
+            var responseDto = new ClienteCadastroDTO
+            {
+                Nome = cliente.nome,
+                TipoContato = cliente.Contatos?.tipo,
+                TextoContato = cliente.Contatos?.texto,
+                Cep = cliente.Endereco.cep,
+                Numero = cliente.Endereco.numero,
+                Logradouro = cliente.Endereco.logradouro,
+                Cidade = cliente.Endereco.cidade,
+                Complemento = cliente.Endereco.complemento
+            };
+
+            return CreatedAtAction("GetCliente", new { id = cliente.id }, responseDto);
         }
 
         [HttpDelete("{id}")]

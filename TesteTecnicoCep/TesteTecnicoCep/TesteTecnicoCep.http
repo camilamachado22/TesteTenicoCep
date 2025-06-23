@@ -42,7 +42,7 @@ Content-Type: application/json
 }
 
 ###
-@id = 3
+@id = 1
 DELETE {{TesteTecnicoCep_HostAddress}}/api/clientes/{{id}}
 
 ###
@@ -59,7 +59,20 @@ Content-Type: application/json
 }
 
 ###
-
+@id=2
 GET {{TesteTecnicoCep_HostAddress}}/api/clientes/{{id}}
+
+###
+
+POST {{TesteTecnicoCep_HostAddress}}/api/clientes
+Content-Type: application/json
+
+{
+ "nome": "Camila Machado7",
+    "tipoContato": "e-mail",
+    "textoContato": "camila@email.com",
+    "cep": "13481332",
+    "numero": "107"
+}
 
 ###

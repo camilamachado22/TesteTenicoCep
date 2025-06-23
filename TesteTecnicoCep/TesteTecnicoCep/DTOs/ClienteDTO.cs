@@ -7,10 +7,7 @@ namespace TesteTecnicoCep.DTOs
     public class ClienteDTO
     {
 
-        public ClienteDTO()
-        {
-            Contatos = new HashSet<ContatoDTO>();
-        }
+       
         
         public int id { get; set; }
         
@@ -20,7 +17,7 @@ namespace TesteTecnicoCep.DTOs
 
         public virtual EnderecoDTO Endereco { get; set; }
 
-        public virtual ICollection<ContatoDTO> Contatos { get; set; }
+        public virtual ContatoDTO Contatos { get; set; }
 
     }
 }
