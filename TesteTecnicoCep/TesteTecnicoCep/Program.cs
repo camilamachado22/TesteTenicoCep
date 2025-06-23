@@ -14,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddOpenApi();
 
 
 builder.Services.AddDbContext<TesteTecnicoCep.Data.TesteTecnicoCepDbContext>(options =>
@@ -35,7 +36,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-  
+    //app.UseSwaggerUI();
+
 }
 
 app.UseHttpsRedirection();

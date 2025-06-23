@@ -37,8 +37,8 @@ namespace TesteTecnicoCep.Controllers
         public async Task<ActionResult<ClienteCadastroDTO>> GetCliente(int id)
         {
             var cliente = await _context.cliente
-         .Include(c => c.Endereco)  // Carrega o endereço
-         .Include(c => c.Contatos)   // Carrega os contatos
+         .Include(c => c.Endereco)  
+         .Include(c => c.Contatos)  
          .FirstOrDefaultAsync(c => c.id == id);
 
             if (cliente == null)
@@ -58,7 +58,7 @@ namespace TesteTecnicoCep.Controllers
                 return BadRequest(ModelState);
             }
 
-            // Busca o cliente existente com relacionamentos
+            
             var clienteExistente = await _context.cliente
                 .Include(c => c.Contatos)
                 .Include(c => c.Endereco)
@@ -66,7 +66,7 @@ namespace TesteTecnicoCep.Controllers
 
             clienteExistente.nome = clienteUpdate.Nome;
 
-            // Atualiza contato (assumindo 1 contato por cliente)
+           
             var contatoExistente = clienteExistente?.Contatos?.ToString();
             if (!string.IsNullOrWhiteSpace(contatoExistente))
             {
@@ -75,7 +75,7 @@ namespace TesteTecnicoCep.Controllers
                 contato.texto = clienteUpdate.TextoContato;
             }
 
-            // Atualiza endereço
+            
             if (clienteUpdate.Cep != clienteExistente.Endereco?.cep)
             {
                 var (logradouro, cidade, complemento) = await cepService.BuscarEnderecoPorCep(clienteUpdate.Cep);

@@ -8,14 +8,14 @@ namespace TesteTecnicoCep.DTOs
             [Required(ErrorMessage = "O nome do cliente é obrigatório")]
             public string? Nome { get; set; }
 
-            // Contato (email, telefone, etc.)
+            
             [Required(ErrorMessage = "O tipo de contato é obrigatório")]
             public string ? TipoContato { get; set; }
 
             [Required(ErrorMessage = "O texto do contato é obrigatório")]
             public string ? TextoContato { get; set; }
 
-            // Endereço
+            
             [Required(ErrorMessage = "O CEP é obrigatório")]
             public string ? Cep { get; set; }
 
@@ -27,6 +27,8 @@ namespace TesteTecnicoCep.DTOs
             public string ? Cidade { get; set; }
 
             public string ? Complemento { get; set; }
+
+            public DateTime DataCadastro { get; set; }
 
            
         
