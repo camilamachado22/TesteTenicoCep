@@ -1,0 +1,26 @@
+﻿
+
+CREATE TABLE public.cliente(
+  id integer GENERATED ALWAYS AS IDENTITY NOT NULL,
+  nome character varying NOT NULL,
+  data_cadastro timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
+CONSTRAINT cliente_pkey PRIMARY KEY(id)
+);
+CREATE TABLE public.contato(
+  id integer GENERATED ALWAYS AS IDENTITY NOT NULL,
+  id_cliente integer NOT NULL,
+  tipo character varying NOT NULL,
+  texto character varying NOT NULL,
+  CONSTRAINT contato_pkey PRIMARY KEY(id, id_cliente),
+  CONSTRAINT contacto_id_cliente_fkey FOREIGN KEY(id_cliente) REFERENCES public.cliente(id)
+);
+CREATE TABLE public.endereco(
+cep character varying NOT NULL,
+  logradouro character varying,
+  cidade character varying,
+  numero character varying NOT NULL,
+  complemento character varying,
+  id_cliente integer NOT NULL,
+  CONSTRAINT endereco_pkey PRIMARY KEY(id_cliente),
+  CONSTRAINT endereco_id_cliente_fkey FOREIGN KEY(id_cliente) REFERENCES public.cliente(id)
+);

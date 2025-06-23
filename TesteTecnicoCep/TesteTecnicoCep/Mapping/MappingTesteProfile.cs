@@ -24,17 +24,15 @@ namespace TesteTecnicoCep.Mapping
             }));
 
             CreateMap<Cliente, ClienteCadastroDTO>()
-    .ForMember(dest => dest.Nome, opt => opt.MapFrom(src => src.nome))
-    .ForMember(dest => dest.TipoContato, opt => opt.MapFrom(src =>
-        src.Contatos.tipo))
-    .ForMember(dest => dest.TextoContato, opt => opt.MapFrom(src =>
-        src.Contatos.texto))
-    .ForMember(dest => dest.Cep, opt => opt.MapFrom(src => src.Endereco.cep))
-    .ForMember(dest => dest.Numero, opt => opt.MapFrom(src => src.Endereco.numero))
-    .ForMember(dest => dest.Logradouro, opt => opt.MapFrom(src => src.Endereco!.logradouro))
-    .ForMember(dest => dest.Cidade, opt => opt.MapFrom(src => src.Endereco!.cidade))
-    .ForMember(dest => dest.Complemento, opt => opt.MapFrom(src => src.Endereco!.complemento))
-    .ForMember(dest => dest.DataCadastro, opt => opt.MapFrom(src => src.data_cadastro));
+            .ForMember(dest => dest.Nome, opt => opt.MapFrom(src => src.nome))
+            .ForMember(dest => dest.TipoContato, opt => opt.MapFrom(src => src.Contatos.tipo))
+            .ForMember(dest => dest.TextoContato, opt => opt.MapFrom(src => src.Contatos.texto))
+            .ForMember(dest => dest.Cep, opt => opt.MapFrom(src => src.Endereco.cep))
+            .ForMember(dest => dest.Numero, opt => opt.MapFrom(src => src.Endereco.numero))
+            .ForMember(dest => dest.Logradouro, opt => opt.MapFrom(src => src.Endereco!.logradouro))
+            .ForMember(dest => dest.Cidade, opt => opt.MapFrom(src => src.Endereco!.cidade))
+            .ForMember(dest => dest.Complemento, opt => opt.MapFrom(src => src.Endereco!.complemento))
+            .ForMember(dest => dest.DataCadastro, opt => opt.MapFrom(src => src.));
 
             CreateMap<DTOs.ContatoDTO, Models.Contato>()
                 .ReverseMap();
