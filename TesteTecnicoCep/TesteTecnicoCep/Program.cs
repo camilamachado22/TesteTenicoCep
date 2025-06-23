@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TesteTecnicoCep.Mapping;
+using TesteTecnicoCep.Mapping;
 using TesteTecnicoCep.Services;
 
 
@@ -9,7 +10,7 @@ using TesteTecnicoCep.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -19,9 +20,11 @@ builder.Services.AddDbContext<TesteTecnicoCep.Data.TesteTecnicoCepDbContext>(opt
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
+
 builder.Services.AddAutoMapper(typeof(MappingTesteProfile));
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 builder.Services.AddHttpClient<CepService>();
+
 
 
 builder.Services.AddOpenApi();

@@ -7,6 +7,7 @@ namespace TesteTecnicoCep.Models
     public class Cliente
     {
 
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
@@ -17,7 +18,9 @@ namespace TesteTecnicoCep.Models
         public DateTime data_cadastro { get; set; }
         public virtual Endereco? Endereco { get; set; }
 
+
         public virtual Contato? Contatos { get; set; }
+
 
 
     }

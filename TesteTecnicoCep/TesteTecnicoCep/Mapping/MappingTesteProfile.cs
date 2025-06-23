@@ -1,12 +1,14 @@
 ﻿using AutoMapper;
 using TesteTecnicoCep.Models;
 
+
 namespace TesteTecnicoCep.Mapping
 {
     public class MappingTesteProfile : Profile
     {
         public MappingTesteProfile()
         {
+
             CreateMap<DTOs.ClienteCadastroDTO, Models.Cliente>()
             .ForMember(dest => dest.nome, opt => opt.MapFrom(src => src.Nome))
             .ForMember(dest => dest.Contatos, opt => opt.MapFrom(src => new Contato
@@ -19,6 +21,7 @@ namespace TesteTecnicoCep.Mapping
                 numero = src.Numero,
                 
             }));
+
             CreateMap<DTOs.ContatoDTO, Models.Contato>()
                 .ReverseMap();
             CreateMap<DTOs.ClienteDTO, Models.Cliente>().ReverseMap();
