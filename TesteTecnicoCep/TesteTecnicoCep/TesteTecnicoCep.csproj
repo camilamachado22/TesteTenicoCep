@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Data\ScriptCriacaoBanco.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="14.0.0" />
     <PackageReference Include="Magic.AutoMapper.Extensions.Microsoft.DependencyInjection" Version="2.0.0" />
 
@@ -21,12 +25,12 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
     <PackageReference Include="Supabase" Version="1.1.1" />
 
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.1" />
 
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Services\" />
-
 
   </ItemGroup>
 
